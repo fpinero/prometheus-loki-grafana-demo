@@ -1,0 +1,24 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-nginx-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/prometheus`)
+    kind: Rule
+    services:
+    - name: prometheus-server
+      port: 80
+    middlewares:
+      - name: prometheus-stripprefix
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: prometheus-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /prometheus

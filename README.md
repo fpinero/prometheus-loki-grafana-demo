@@ -24,7 +24,8 @@
 
 # If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
 export INGRESS_HOST=127.0.0.1
-export INGRESS_HOST=f5389e7c-01a8-47cd-9d6b-cec673caafc9.k8s.civo.com
+export INGRESS_HOST=61c507a0-36b0-468e-aaf7-9e5081891ab9.k8s.civo.com
+export INGRESS_HOST=orck3s.n0-reply.com
 
 # # Change the value if NOT using NGINX Ingress
 # export INGRESS_CLASS_NAME=nginx
@@ -56,12 +57,30 @@ helm upgrade --install \
 
 --- k3s ---
 helm upgrade --install \
-    prometheus prometheus-community/prometheus \
+    prometheus prometheus/prometheus \
     --namespace monitoring \
     --create-namespace \
     --values prometheus-values.yaml \
     --set "server.ingress.hosts[0]=$INGRESS_HOST/prometheus/" \
     --set "prometheus.podMonitor=false" \
+    --wait
+---
+bitnami
+helm upgrade --install \
+    prometheus bitnami/kube-prometheus \
+    --namespace monitoring \
+    --create-namespace \
+    --values prometheus-values.yaml \
+    --set "server.ingress.hosts[0]=$INGRESS_HOST/prometheus/" \
+    --wait
+---
+azure qa
+helm upgrade --install \
+    prometheus azure-marketplace/kube-prometheus \
+    --namespace monitoring \
+    --create-namespace \
+    --values prometheus-values.yaml \
+    --set "server.ingress.hosts[0]=bizerba-bss-qa.com/prometheus" \
     --wait
 
 ---
@@ -95,7 +114,7 @@ helm upgrade --install \
     --namespace monitoring \
     --create-namespace \
     --wait
-
+elm install my-release azure-marketplace/grafana-loki
 ###########################
 # Dashboards With Grafana #
 ###########################
