@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-prometheus
+  namespace: monitoring
+
+spec:
+  rules:
+    - host: prometheus.141.145.211.128.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: "Prefix"
+            backend:
+              service:
+                name: prometheus-server
+                port:
+                  number: 80
