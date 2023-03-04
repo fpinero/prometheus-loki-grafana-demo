@@ -26,6 +26,7 @@
 export INGRESS_HOST=127.0.0.1
 export INGRESS_HOST=61c507a0-36b0-468e-aaf7-9e5081891ab9.k8s.civo.com
 export INGRESS_HOST=orck3s.n0-reply.com
+export INGRESS_HOST=141.145.211.128
 
 # # Change the value if NOT using NGINX Ingress
 # export INGRESS_CLASS_NAME=nginx
